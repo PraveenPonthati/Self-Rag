@@ -15,7 +15,7 @@ if not GOOGLE_API_KEY:
     raise EnvironmentError(
         "GOOGLE_API_KEY is not set. "
         "Get a free key at https://aistudio.google.com/app/apikey "
-        "and add it to Replit Secrets or a local .env file."
+        "and add it to github Secrets or a local .env file."
     )
 
 # Gemini model for chat/generation (free tier supports this)
@@ -40,7 +40,7 @@ CHROMA_COLLECTION_NAME = "self_rag_docs"
 
 # ── Retrieval parameters ──────────────────────────────────────────────────────
 TOP_K = 5                  # Number of chunks to retrieve per query
-CHUNK_SIZE = 1000          # Characters per text chunk
+CHUNK_SIZE = 500          # Characters per text chunk
 CHUNK_OVERLAP = 200        # Overlap between consecutive chunks
 
 # ── Agent limits ─────────────────────────────────────────────────────────────
