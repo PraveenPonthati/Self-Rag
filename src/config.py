@@ -9,6 +9,14 @@ from dotenv import load_dotenv
 # Load .env file if present (useful for local development)
 load_dotenv()
 
+# Load from Streamlit secrets if running on Streamlit Cloud
+try:
+    import streamlit as st
+    for key, value in st.secrets.items():
+        os.environ.setdefault(key, str(value))
+except Exception:
+    pass  # Not running in Streamlit, or secrets not configured — that's fine
+
 # ── Google Gemini ─────────────────────────────────────────────────────────────
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 if not GOOGLE_API_KEY:
