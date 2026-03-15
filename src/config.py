@@ -1,0 +1,47 @@
+"""
+Configuration module — loads environment variables and sets up shared constants.
+Uses python-dotenv so you can also run the app locally with a .env file.
+"""
+
+import os
+from dotenv import load_dotenv
+
+# Load .env file if present (useful for local development)
+load_dotenv()
+
+# ── Google Gemini ─────────────────────────────────────────────────────────────
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
+if not GOOGLE_API_KEY:
+    raise EnvironmentError(
+        "GOOGLE_API_KEY is not set. "
+        "Get a free key at https://aistudio.google.com/app/apikey "
+        "and add it to Replit Secrets or a local .env file."
+    )
+
+# Gemini model for chat/generation (free tier supports this)
+LLM_MODEL = "gemini-2.5-flash"
+
+# Gemini embedding model
+EMBEDDING_MODEL = "gemini-embedding-001"
+
+# ── LangSmith tracing (optional) ─────────────────────────────────────────────
+LANGCHAIN_TRACING_V2 = os.getenv("LANGCHAIN_TRACING_V2", "false").lower() == "true"
+LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY", "")
+LANGCHAIN_PROJECT = os.getenv("LANGCHAIN_PROJECT", "self-rag-agent")
+
+if LANGCHAIN_TRACING_V2 and LANGCHAIN_API_KEY:
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_API_KEY"] = LANGCHAIN_API_KEY
+    os.environ["LANGCHAIN_PROJECT"] = LANGCHAIN_PROJECT
+
+# ── Vector store ─────────────────────────────────────────────────────────────
+CHROMA_PERSIST_DIR = os.path.join(os.path.dirname(__file__), "..", "chroma_db")
+CHROMA_COLLECTION_NAME = "self_rag_docs"
+
+# ── Retrieval parameters ──────────────────────────────────────────────────────
+TOP_K = 5                  # Number of chunks to retrieve per query
+CHUNK_SIZE = 1000          # Characters per text chunk
+CHUNK_OVERLAP = 200        # Overlap between consecutive chunks
+
+# ── Agent limits ─────────────────────────────────────────────────────────────
+MAX_RETRIES = 2            # Maximum query-rewrite retries before giving up

@@ -1,0 +1,14 @@
+langchain==1.2.12
+langchain-core==0.3.60
+langchain-community==0.4.1
+langchain-chroma==1.1.0
+langchain-text-splitters==1.1.1
+langchain-google-genai==4.2.1
+langgraph==1.1.2
+chromadb==1.5.5
+PyMuPDF==1.27.2
+streamlit==1.55.0
+python-dotenv==1.2.2
+langsmith==0.7.17
+pydantic==2.12.5
+google-genai==1.67.0
