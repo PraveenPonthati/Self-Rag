@@ -21,7 +21,7 @@
 
 <br/>
 
-[Demo](#-demo) · [Features](#-features) · [Architecture](#-architecture) · [Quickstart](#-quickstart) · [Tech Stack](#-tech-stack)
+[Deployed link !](https://praveenponthati-self-rag.streamlit.app/) · [Features](#-features) · [Architecture](#-architecture) · [Quickstart](#-quickstart) · [Tech Stack](#-tech-stack)
 
 ---
 
