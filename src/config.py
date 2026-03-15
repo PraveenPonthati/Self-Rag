@@ -1,32 +1,23 @@
 """
-Configuration module — loads environment variables and sets up shared constants.
-Uses python-dotenv so you can also run the app locally with a .env file.
+Configuration module — loads environment variables from Streamlit secrets.
 """
 
 import os
-from dotenv import load_dotenv
+import streamlit as st
 
-# Load .env file if present (useful for local development)
-load_dotenv()
-
-# Load from Streamlit secrets if running on Streamlit Cloud
-try:
-    import streamlit as st
-    for key, value in st.secrets.items():
-        os.environ.setdefault(key, str(value))
-except Exception:
-    pass  # Not running in Streamlit, or secrets not configured — that's fine
+# Load all Streamlit secrets into environment variables
+for key, value in st.secrets.items():
+    os.environ[key] = str(value)
 
 # ── Google Gemini ─────────────────────────────────────────────────────────────
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 if not GOOGLE_API_KEY:
     raise EnvironmentError(
         "GOOGLE_API_KEY is not set. "
-        "Get a free key at https://aistudio.google.com/app/apikey "
-        "and add it to github Secrets or a local .env file."
+        "Add it to your Streamlit Cloud secrets."
     )
 
-# Gemini model for chat/generation (free tier supports this)
+# Gemini model for chat/generation
 LLM_MODEL = "gemini-2.5-flash"
 
 # Gemini embedding model
@@ -47,9 +38,9 @@ CHROMA_PERSIST_DIR = os.path.join(os.path.dirname(__file__), "..", "chroma_db")
 CHROMA_COLLECTION_NAME = "self_rag_docs"
 
 # ── Retrieval parameters ──────────────────────────────────────────────────────
-TOP_K = 5                  # Number of chunks to retrieve per query
-CHUNK_SIZE = 500          # Characters per text chunk
-CHUNK_OVERLAP = 200        # Overlap between consecutive chunks
+TOP_K = 5
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 200
 
 # ── Agent limits ─────────────────────────────────────────────────────────────
-MAX_RETRIES = 2            # Maximum query-rewrite retries before giving up
+MAX_RETRIES = 2
